@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import Show from "./Show.js";
 import Keys,{symbols} from "./Keys.js"
+import "../styles.css"
 function App() {
   const [inputText,setInputText]=useState("");
   const [ans,setAns]=useState(0);
@@ -16,7 +17,7 @@ function App() {
     }
     else if(symbol===symbols[2]){
       try{
-      const result=eval(inputText);
+      const result=window.eval(inputText);
       setInputText(result);
       setAns(result);
       }
@@ -30,10 +31,14 @@ function App() {
     }
     else{
       setInputText((prevText)=>{
-        return prevText+ans;
+        typeof prevText==="number" ? prevText=prevText+ans : 
+        prevText.charAt(prevText.length-1)==="/" || prevText.charAt(prevText.length-1)==="*" || prevText.charAt(prevText.length-1)==="+" || prevText.charAt(prevText.length-1)==="-" ? 
+        prevText=prevText+ans:prevText=prevText;
+        return prevText;
       })
     }
   }
+  
   return (
     <div>
       <h1>Calculator</h1>
